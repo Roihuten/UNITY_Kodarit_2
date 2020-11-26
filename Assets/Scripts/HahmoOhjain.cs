@@ -40,8 +40,15 @@ public class HahmoOhjain : MonoBehaviour
         vertikaalinenPyorinta -= Input.GetAxis("Mouse Y") * hiirenNopeus;
         //Debug.Log($"asteet {horisontaalinenPyorinta}");
         vertikaalinenPyorinta = Mathf.Clamp(vertikaalinenPyorinta, -maxKaannosAsteet, maxKaannosAsteet);
+        // Mathf.Clamp rajoittaa "vertikaalisen pyörinnän" max ja min lukujen väliin
         Camera.main.transform.localRotation = Quaternion.Euler(vertikaalinenPyorinta, horisontaalinenPyorinta, 0);
 
-        //LIIKKEET! TEE LIIKEKET VALMIIKSI TÄHÄN!!
+        //LIIKKEET! TEE LIIKKEET VALMIIKSI TÄHÄN!!
+        float nopeusEteen = Input.GetAxis("Vertical");
+        float nopeusSivulle = Input.GetAxis("Horizontal");
+        Vector3 nopeus = new Vector3(nopeusSivulle, 0, nopeusEteen);
+
+        nopeus = transform.rotation * nopeus;
+        controller.SimpleMove(nopeus * juoksuNopeus);
     }
 }
